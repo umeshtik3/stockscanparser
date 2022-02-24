@@ -11,16 +11,10 @@ class ApiManager {
     try {
       if (response.statusCode == 200) {
         var jsonString = response.body;
-        // ignore: avoid_print
-        // print(jsonString);
         list = indexesFromJson(jsonString);
-      } else {
-        //show error message
-
       }
     } on Exception catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
     return list;
   }

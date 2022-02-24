@@ -80,69 +80,127 @@ class Criterion {
 }
 
 class Variable {
-  Variable({
-    this.the1,
-    this.the2,
-    this.the3,
-    this.the4,
-  });
+  Map<String, dynamic>? dollors;
+  Variable({this.dollors});
 
-  The1? the1;
-  The1? the2;
-  The1? the3;
-  The1? the4;
+  factory Variable.fromJson(Map<String, dynamic> data) {
+    List<Dollors> dollorsValuesList = [];
+    Map<String, dynamic>? variablesMap = {};
+    data.forEach((key, value) {
+      if (key.contains('\$')) {
+        var d = Dollors.fromJson(value);
+        dollorsValuesList.add(d);
+        variablesMap['key'] = key;
+        variablesMap['value'] = d;
+      }
+    });
+    return Variable(dollors: variablesMap);
+  }
 
-  factory Variable.fromJson(Map<String, dynamic> json) => Variable(
-        the1: json[dbDollor1] == null ? null : The1.fromJson(json[dbDollor1]),
-        the2: json[dbDollor2] == null ? null : The1.fromJson(json[dbDollor2]),
-        the3: json[dbDollor3] == null ? null : The1.fromJson(json[dbDollor3]),
-        the4: json[dbDollor4] == null ? null : The1.fromJson(json[dbDollor4]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        dbDollor1: the1 == null ? null : the1!.toJson(),
-        dbDollor2: the2 == null ? null : the2!.toJson(),
-        dbDollor3: the3 == null ? null : the3!.toJson(),
-        dbDollor4: the4 == null ? null : the4!.toJson(),
-      };
+  toJson() {}
 }
 
-class The1 {
-  The1({
-    this.type,
-    this.values,
-    this.studyType,
-    this.parameterName,
-    this.minValue,
-    this.maxValue,
-    this.defaultValue,
-  });
-
-  String? type;
+class Dollors {
+  final String typeOfVariable;
   List<dynamic>? values;
   String? studyType;
   String? parameterName;
-  dynamic minValue;
-  dynamic maxValue;
-  dynamic defaultValue;
+  int? minValue;
+  int? maxValue;
+  int? defaultValue;
 
-  factory The1.fromJson(Map<String, dynamic> json) => The1(
-        type: json[dbType],
-        values: json[dbValues] == null ? null : List<dynamic>.from(json[dbValues].map((x) => x)),
-        studyType: json[dbStudyType],
-        parameterName: json[dbParameterName],
-        minValue: json[dbMinValue],
-        maxValue: json[dbMaxValue],
-        defaultValue: json[dbDefaultValue],
-      );
+  Dollors(
+      {required this.typeOfVariable,
+      this.values,
+      this.studyType,
+      this.parameterName,
+      this.minValue,
+      this.maxValue,
+      this.defaultValue});
 
-  Map<String, dynamic> toJson() => {
-        dbType: type,
-        dbValues: values == null ? null : List<dynamic>.from(values!.map((x) => x)),
-        dbStudyType: studyType,
-        dbParameterName: parameterName,
-        dbMinValue: minValue,
-        dbMaxValue: maxValue,
-        dbDefaultValue: defaultValue,
-      };
+  factory Dollors.fromJson(Map<String, dynamic> data) {
+    final typeOfVariable = data[dbType];
+    final values = data[dbValues] ?? data[dbValues];
+    final studyType = data[dbStudyType] ?? data[dbStudyType];
+    final parameterName = data[dbParameterName] ?? data[dbParameterName];
+    final minValue = data[dbMinValue] ?? data[dbMinValue];
+    final maxValue = data[dbMaxValue] ?? data[dbMaxValue];
+    final defaultValue = data[dbDefaultValue] ?? data[dbDefaultValue];
+    return Dollors(
+        typeOfVariable: typeOfVariable,
+        values: values,
+        studyType: studyType,
+        parameterName: parameterName,
+        minValue: minValue,
+        maxValue: maxValue,
+        defaultValue: defaultValue);
+  }
 }
+
+// class Variable {
+//   Variable({
+//     this.the1,
+//     this.the2,
+//     this.the3,
+//     this.the4,
+//   });
+
+//   The1? the1;
+//   The1? the2;
+//   The1? the3;
+//   The1? the4;
+
+//   factory Variable.fromJson(Map<String, dynamic> json) => Variable(
+//         the1: json[dbDollor1] == null ? null : The1.fromJson(json[dbDollor1]),
+//         the2: json[dbDollor2] == null ? null : The1.fromJson(json[dbDollor2]),
+//         the3: json[dbDollor3] == null ? null : The1.fromJson(json[dbDollor3]),
+//         the4: json[dbDollor4] == null ? null : The1.fromJson(json[dbDollor4]),
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         dbDollor1: the1 == null ? null : the1!.toJson(),
+//         dbDollor2: the2 == null ? null : the2!.toJson(),
+//         dbDollor3: the3 == null ? null : the3!.toJson(),
+//         dbDollor4: the4 == null ? null : the4!.toJson(),
+//       };
+// }
+
+// class The1 {
+//   The1({
+//     this.type,
+//     this.values,
+//     this.studyType,
+//     this.parameterName,
+//     this.minValue,
+//     this.maxValue,
+//     this.defaultValue,
+//   });
+
+//   String? type;
+//   List<dynamic>? values;
+//   String? studyType;
+//   String? parameterName;
+//   dynamic minValue;
+//   dynamic maxValue;
+//   dynamic defaultValue;
+
+//   factory The1.fromJson(Map<String, dynamic> json) => The1(
+//         type: json[dbType],
+//         values: json[dbValues] == null ? null : List<dynamic>.from(json[dbValues].map((x) => x)),
+//         studyType: json[dbStudyType],
+//         parameterName: json[dbParameterName],
+//         minValue: json[dbMinValue],
+//         maxValue: json[dbMaxValue],
+//         defaultValue: json[dbDefaultValue],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         dbType: type,
+//         dbValues: values == null ? null : List<dynamic>.from(values!.map((x) => x)),
+//         dbStudyType: studyType,
+//         dbParameterName: parameterName,
+//         dbMinValue: minValue,
+//         dbMaxValue: maxValue,
+//         dbDefaultValue: defaultValue,
+//       };
+// }

@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:stockscanparser/data_models/data_models.dart';
+import 'package:stockscanparser/utility/common/common_style.dart';
 
 class IndexDetail extends StatefulWidget {
   final String title;
   final String tag;
-  final list;
-  final int? stockId;
+  final Indexes stockIndex;
   final List<Criterion>? criteriaList;
-  final int index;
-  const IndexDetail(
-      {Key? key,
-      required this.list,
-      required this.title,
-      required this.stockId,
-      required this.tag,
-      required this.criteriaList,
-      required this.index})
-      : super(key: key);
+
+  const IndexDetail({
+    Key? key,
+    required this.title,
+    required this.stockIndex,
+    required this.tag,
+    required this.criteriaList,
+  }) : super(key: key);
 
   @override
   State<IndexDetail> createState() => _IndexDetailState();
@@ -24,10 +22,13 @@ class IndexDetail extends StatefulWidget {
 
 class _IndexDetailState extends State<IndexDetail> {
   List<Criterion>? _criterionList;
+  final Indexes _stockIndex = Indexes();
   @override
   void initState() {
     super.initState();
     _criterionList = widget.criteriaList;
+    _stockIndex.name = widget.stockIndex.name;
+    _stockIndex.tag = widget.stockIndex.tag;
   }
 
   Criterion extractCriteriaText(int index) {
@@ -53,7 +54,7 @@ class _IndexDetailState extends State<IndexDetail> {
               Container(
                 height: 80,
                 padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(color: Colors.lightBlue),
+                decoration: const BoxDecoration(color: Style.lightBlue),
                 child: Row(
                   children: [
                     Column(
@@ -61,12 +62,12 @@ class _IndexDetailState extends State<IndexDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          widget.title,
-                          style: const TextStyle(fontSize: 19, color: Colors.white, fontWeight: FontWeight.bold),
+                          _stockIndex.name!,
+                          style: Style.text19(context),
                         ),
                         Text(
-                          widget.tag,
-                          style: const TextStyle(fontSize: 15, color: Colors.green, fontWeight: FontWeight.bold),
+                          _stockIndex.tag!,
+                          style: Style.text15(context),
                         ),
                       ],
                     ),
@@ -78,7 +79,7 @@ class _IndexDetailState extends State<IndexDetail> {
                 shrinkWrap: true,
                 itemCount: _criterionList!.length,
                 itemBuilder: (context, index) {
-                  Criterion c = extractCriteriaText(index);
+                  Criterion _criteria = extractCriteriaText(index);
 
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -86,11 +87,7 @@ class _IndexDetailState extends State<IndexDetail> {
                     children: [
                       Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18.0),
-                          child: Text(
-                            c.text.toString(),
-                            style: const TextStyle(fontSize: 16),
-                          ))
-                      // ),
+                          child: Text(_criteria.text.toString(), style: Style.text16(context)))
                     ],
                   );
                 },
