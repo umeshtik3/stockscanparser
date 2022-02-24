@@ -1,5 +1,24 @@
 import 'dart:convert';
 
+const String dbID = "id";
+const String dbName = "name";
+const String dbTag = "tag";
+const String dbColor = "color";
+const String dbCriteria = "criteria";
+const String dbType = "type";
+const String dbText = "text";
+const String dbVariable = "variable";
+const String dbDollor1 = "\u00241";
+const String dbDollor2 = "\u00242";
+const String dbDollor3 = "\u00243";
+const String dbDollor4 = "\u00244";
+const String dbStudyType = "study_type";
+const String dbValues = "values";
+const String dbDefaultValue = "default_value";
+const String dbParameterName = "parameter_name";
+const String dbMinValue = "min_value";
+const String dbMaxValue = "max_value";
+
 List<Indexes> indexesFromJson(String str) => List<Indexes>.from(json.decode(str).map((x) => Indexes.fromJson(x)));
 
 String indexesToJson(List<Indexes> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -20,19 +39,19 @@ class Indexes {
   List<Criterion>? criteria;
 
   factory Indexes.fromJson(Map<String, dynamic> json) => Indexes(
-        id: json["id"],
-        name: json["name"],
-        tag: json["tag"],
-        color: json["color"],
-        criteria: List<Criterion>.from(json["criteria"].map((x) => Criterion.fromJson(x))),
+        id: json[dbID],
+        name: json[dbName],
+        tag: json[dbTag],
+        color: json[dbColor],
+        criteria: List<Criterion>.from(json[dbCriteria].map((x) => Criterion.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "tag": tag,
-        "color": color,
-        "criteria": List<dynamic>.from(criteria!.map((x) => x.toJson())),
+        dbID: id,
+        dbName: name,
+        dbTag: tag,
+        dbColor: color,
+        dbCriteria: List<dynamic>.from(criteria!.map((x) => x.toJson())),
       };
 }
 
@@ -48,15 +67,15 @@ class Criterion {
   Variable? variable;
 
   factory Criterion.fromJson(Map<String, dynamic> json) => Criterion(
-        type: json["type"],
-        text: json["text"],
-        variable: json["variable"] == null ? null : Variable.fromJson(json["variable"]),
+        type: json[dbType],
+        text: json[dbText],
+        variable: json[dbVariable] == null ? null : Variable.fromJson(json["variable"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "type": type,
-        "text": text,
-        "variable": variable == null ? null : variable!.toJson(),
+        dbType: type,
+        dbText: text,
+        dbVariable: variable == null ? null : variable!.toJson(),
       };
 }
 
@@ -74,17 +93,17 @@ class Variable {
   The1? the4;
 
   factory Variable.fromJson(Map<String, dynamic> json) => Variable(
-        the1: json["\u00241"] == null ? null : The1.fromJson(json["\u00241"]),
-        the2: json["\u00242"] == null ? null : The1.fromJson(json["\u00242"]),
-        the3: json["\u00243"] == null ? null : The1.fromJson(json["\u00243"]),
-        the4: json["\u00244"] == null ? null : The1.fromJson(json["\u00244"]),
+        the1: json[dbDollor1] == null ? null : The1.fromJson(json[dbDollor1]),
+        the2: json[dbDollor2] == null ? null : The1.fromJson(json[dbDollor2]),
+        the3: json[dbDollor3] == null ? null : The1.fromJson(json[dbDollor3]),
+        the4: json[dbDollor4] == null ? null : The1.fromJson(json[dbDollor4]),
       );
 
   Map<String, dynamic> toJson() => {
-        "\u00241": the1 == null ? null : the1!.toJson(),
-        "\u00242": the2 == null ? null : the2!.toJson(),
-        "\u00243": the3 == null ? null : the3!.toJson(),
-        "\u00244": the4 == null ? null : the4!.toJson(),
+        dbDollor1: the1 == null ? null : the1!.toJson(),
+        dbDollor2: the2 == null ? null : the2!.toJson(),
+        dbDollor3: the3 == null ? null : the3!.toJson(),
+        dbDollor4: the4 == null ? null : the4!.toJson(),
       };
 }
 
@@ -100,50 +119,30 @@ class The1 {
   });
 
   String? type;
-  List<int>? values;
+  List<dynamic>? values;
   String? studyType;
   String? parameterName;
-  int? minValue;
-  int? maxValue;
-  int? defaultValue;
+  dynamic minValue;
+  dynamic maxValue;
+  dynamic defaultValue;
 
   factory The1.fromJson(Map<String, dynamic> json) => The1(
-        type: json["type"],
-        values: json["values"] == null ? null : List<int>.from(json["values"].map((x) => x)),
-        studyType: json["study_type"],
-        parameterName: json["parameter_name"],
-        minValue: json["min_value"],
-        maxValue: json["max_value"],
-        defaultValue: json["default_value"],
+        type: json[dbType],
+        values: json[dbValues] == null ? null : List<dynamic>.from(json[dbValues].map((x) => x)),
+        studyType: json[dbStudyType],
+        parameterName: json[dbParameterName],
+        minValue: json[dbMinValue],
+        maxValue: json[dbMaxValue],
+        defaultValue: json[dbDefaultValue],
       );
 
   Map<String, dynamic> toJson() => {
-        "type": type,
-        "values": values == null ? null : List<dynamic>.from(values!.map((x) => x)),
-        "study_type": studyType,
-        "parameter_name": parameterName,
-        "min_value": minValue,
-        "max_value": maxValue,
-        "default_value": defaultValue,
-      };
-}
-
-class The2 {
-  The2({
-    this.type,
-    this.values,
-  });
-
-  String? type;
-  List<double>? values;
-
-  factory The2.fromJson(Map<String, dynamic> json) => The2(
-        type: json["type"],
-        values: List<double>.from(json["values"].map((x) => x.toDouble())),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "values": List<dynamic>.from(values!.map((x) => x)),
+        dbType: type,
+        dbValues: values == null ? null : List<dynamic>.from(values!.map((x) => x)),
+        dbStudyType: studyType,
+        dbParameterName: parameterName,
+        dbMinValue: minValue,
+        dbMaxValue: maxValue,
+        dbDefaultValue: defaultValue,
       };
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stockscanparser/data_models/data_models.dart';
 import 'package:stockscanparser/widgets/criteria_variables.dart';
@@ -5,11 +6,13 @@ import 'package:stockscanparser/widgets/criteria_variables.dart';
 class IndexDetail extends StatefulWidget {
   final String title;
   final String tag;
+  final list;
   final int? stockId;
   final List<Criterion>? criteriaList;
   final int index;
   const IndexDetail(
       {Key? key,
+      required this.list,
       required this.title,
       required this.stockId,
       required this.tag,
@@ -24,6 +27,10 @@ class IndexDetail extends StatefulWidget {
 class _IndexDetailState extends State<IndexDetail> {
   List<Criterion>? _criterionList;
   Variable? _variable;
+  The1? _the1;
+  The1? _the2;
+  The1? _the3;
+  The1? _the4;
   @override
   void initState() {
     super.initState();
@@ -31,44 +38,13 @@ class _IndexDetailState extends State<IndexDetail> {
   }
 
   Criterion extractCriteriaText(int index) {
+    // ignore: avoid_print
+    print(index);
     Criterion criterion = Criterion();
     criterion.text = _criterionList![index].text;
     criterion.type = _criterionList![index].type;
-    _variable = _criterionList![index].variable;
 
-    // if (_variable != null) {
-    //   selectText(_variable);
-    // }
     return criterion;
-  }
-
-  void selectVariable(int stockId) {
-    switch (stockId) {
-      case 3:
-        {
-          CriteriaVariables(
-            variable: _variable?.the1,
-          );
-        }
-
-        break;
-      case 4:
-        {
-          CriteriaVariables(
-            variable: _variable?.the2,
-          );
-        }
-        break;
-      case 5:
-        {
-          CriteriaVariables(
-            variable: _variable?.the1,
-          );
-        }
-
-        break;
-      default:
-    }
   }
 
   @override
@@ -113,15 +89,12 @@ class _IndexDetailState extends State<IndexDetail> {
                 itemBuilder: (context, index) {
                   Criterion c = extractCriteriaText(index);
 
+
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // RichText(
-                      //     text: TextSpan(style: TextStyle(color: Colors.black), children: [
-                      //   TextSpan(text: c.text!.split('\$')[0].toString()),
-                      //   TextSpan(text: c.text!.split('\$')[1].toString(), style: const TextStyle(color: Colors.blue))
-                      // ])),
+                
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 18.0),
                         child: !c.text.toString().contains('\$')
@@ -129,18 +102,24 @@ class _IndexDetailState extends State<IndexDetail> {
                                 c.text.toString(),
                                 style: const TextStyle(fontSize: 16),
                               )
-                            : GestureDetector(
-                                onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CriteriaVariables(
-                                                variable: _variable,
-                                              )))
-                                },
-                                child: Text(c.text.toString()),
-                              ),
-                      ),
+                            :
+                            // : GestureDetector(
+                            //     onTap: () => {
+                            //       Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) => CriteriaVariables(
+                            //                     critionList: _criterionList,
+                            //                     the1: _the1,
+                            //                     the2: _the2,
+                            //                     the3: _the3,
+                            //                     the4: _the4,
+                            //                   )))
+                            //     },
+                            // child:
+                            Text(c.text.toString()),
+                      )
+                      // ),
                     ],
                   );
                 },

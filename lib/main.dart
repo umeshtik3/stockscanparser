@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(
+      home: const MyHomePage(
         title: 'Parser',
       ),
     );
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
 // ignore: must_be_immutable
 class MyHomePage extends StatefulWidget {
   final String title;
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -46,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool loading = true;
   List<Indexes>? stockIndexList;
+  Indexes? singleStockIndex;
   @override
   void initState() {
     super.initState();
@@ -96,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => IndexDetail(
+                                          list: stockIndexList,
                                           title: stockIndex.name.toString(),
                                           tag: stockIndex.tag.toString(),
                                           criteriaList: stockIndex.criteria,
