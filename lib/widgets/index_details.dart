@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stockscanparser/data_models/data_models.dart';
-import 'package:stockscanparser/widgets/criteria_variables.dart';
 
 class IndexDetail extends StatefulWidget {
   final String title;
@@ -26,11 +24,6 @@ class IndexDetail extends StatefulWidget {
 
 class _IndexDetailState extends State<IndexDetail> {
   List<Criterion>? _criterionList;
-  Variable? _variable;
-  The1? _the1;
-  The1? _the2;
-  The1? _the3;
-  The1? _the4;
   @override
   void initState() {
     super.initState();
@@ -38,8 +31,6 @@ class _IndexDetailState extends State<IndexDetail> {
   }
 
   Criterion extractCriteriaText(int index) {
-    // ignore: avoid_print
-    print(index);
     Criterion criterion = Criterion();
     criterion.text = _criterionList![index].text;
     criterion.type = _criterionList![index].type;
@@ -61,7 +52,7 @@ class _IndexDetailState extends State<IndexDetail> {
             children: [
               Container(
                 height: 80,
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(color: Colors.lightBlue),
                 child: Row(
                   children: [
@@ -89,36 +80,16 @@ class _IndexDetailState extends State<IndexDetail> {
                 itemBuilder: (context, index) {
                   Criterion c = extractCriteriaText(index);
 
-
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 18.0),
-                        child: !c.text.toString().contains('\$')
-                            ? Text(
-                                c.text.toString(),
-                                style: const TextStyle(fontSize: 16),
-                              )
-                            :
-                            // : GestureDetector(
-                            //     onTap: () => {
-                            //       Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(
-                            //               builder: (context) => CriteriaVariables(
-                            //                     critionList: _criterionList,
-                            //                     the1: _the1,
-                            //                     the2: _the2,
-                            //                     the3: _the3,
-                            //                     the4: _the4,
-                            //                   )))
-                            //     },
-                            // child:
-                            Text(c.text.toString()),
-                      )
+                          padding: const EdgeInsets.symmetric(vertical: 18.0),
+                          child: Text(
+                            c.text.toString(),
+                            style: const TextStyle(fontSize: 16),
+                          ))
                       // ),
                     ],
                   );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stockscanparser/backend/api/api_manager.dart';
 import 'package:stockscanparser/data_models/data_models.dart';
+import 'package:stockscanparser/utility/common/common_style.dart';
 import 'package:stockscanparser/widgets/index_details.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primaryColor: Style.basicBlue,
       ),
       home: const MyHomePage(
         title: 'Parser',
@@ -108,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
-                          color: Colors.grey[300],
+                          color: Style.lightGrey,
                           child: ListTile(
                             title: Text(
                               stockIndex.name.toString(),
@@ -117,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             subtitle: Text(
                               stockIndex.tag.toString(),
                               style: TextStyle(
-                                  fontSize: 16, color: stockIndex.color == 'green' ? Colors.green : Colors.red),
+                                  fontSize: 16, color: stockIndex.color == 'green' ? Style.grassGreen : Style.bloodRed),
                             ),
                           ),
                         ),
