@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     Indexes stockIndex = _singleIndex(index, _stockIndexList);
                     return GestureDetector(
-                      onTap: (() => {_launchNextPage(context, stockIndex, index)}),
+                      onTap: (() => {_launchNextPage(context, stockIndex)}),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
@@ -85,14 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _launchNextPage(BuildContext context, Indexes stockIndex, int index) {
+  void _launchNextPage(BuildContext context, Indexes stockIndex) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => IndexDetail(
-                  title: stockIndex.name.toString(),
-                  tag: stockIndex.tag.toString(),
-                  criteriaList: stockIndex.criteria,
                   stockIndex: stockIndex,
                 )));
   }

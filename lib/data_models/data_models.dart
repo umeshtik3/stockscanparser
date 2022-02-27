@@ -80,21 +80,20 @@ class Criterion {
 }
 
 class Variable {
-  Map<String, dynamic>? dollors;
+  List<Map<String, dynamic>>? dollors;
   Variable({this.dollors});
 
   factory Variable.fromJson(Map<String, dynamic> data) {
-    List<Dollors> dollorsValuesList = [];
+    List<Map<String, dynamic>> dollorsValuesList = [];
     Map<String, dynamic>? variablesMap = {};
     data.forEach((key, value) {
       if (key.contains('\$')) {
         var d = Dollors.fromJson(value);
-        dollorsValuesList.add(d);
-        variablesMap['key'] = key;
-        variablesMap['value'] = d;
+        variablesMap.putIfAbsent(key, () => d);
       }
     });
-    return Variable(dollors: variablesMap);
+    dollorsValuesList.add(variablesMap);
+    return Variable(dollors: dollorsValuesList);
   }
 
   toJson() {}
