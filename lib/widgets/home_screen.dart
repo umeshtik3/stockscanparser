@@ -63,16 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GestureDetector(
                       onTap: (() => {_launchNextPage(context, stockIndex)}),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(Style.padding8),
                         child: Card(
                           color: Style.lightGrey,
                           child: ListTile(
-                            title: Text(stockIndex.name.toString(), style: Style.text18(context)),
+                            title: Text(stockIndex.name!, style: Style.text18(context)),
                             subtitle: Text(
                               stockIndex.tag.toString(),
-                              style: TextStyle(
-                                  fontSize: Style.fontSize16,
-                                  color: stockIndex.color == 'green' ? Style.grassGreen : Style.bloodRed),
+                              style: TextStyle(fontSize: Style.fontSize16, color: Style.indexColor(stockIndex.color!)),
                             ),
                           ),
                         ),

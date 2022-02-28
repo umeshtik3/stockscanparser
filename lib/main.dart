@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Scan Parser',
       theme: ThemeData(
+        scaffoldBackgroundColor: Style.draculaBlack,
         primaryColor: Style.basicBlue,
       ),
       home: const HomeScreen(

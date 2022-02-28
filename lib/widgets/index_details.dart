@@ -27,6 +27,7 @@ class _IndexDetailState extends State<IndexDetail> {
     _criterionList = widget.stockIndex.criteria;
     _stockIndex.name = widget.stockIndex.name;
     _stockIndex.tag = widget.stockIndex.tag;
+    _stockIndex.color = widget.stockIndex.color;
   }
 
   Criterion extractCriteriaText(int index) {
@@ -38,38 +39,34 @@ class _IndexDetailState extends State<IndexDetail> {
     return criterion;
   }
 
-  Widget stringManipulation(String? str, Variable? variable) {
+  Widget buildClickableText(String? str, Variable? variable) {
     final RegExp regex = RegExp(r"\$(\d+)");
     String text = str!;
     final List<InlineSpan> textSpans = [];
     final Iterable<Match> matches = regex.allMatches(text);
     int start = 0;
     for (final Match match in matches) {
-      textSpans.add(TextSpan(text: text.substring(start, match.start)));
+      textSpans.add(TextSpan(text: text.substring(start, match.start), style: Style.text20(context)));
       textSpans.add(WidgetSpan(
           child: GestureDetector(
               onTap: () {
-                print("You tapped \$${match.group(1)}");
-                // var a = variable!.dollors!.f.containsValue('\$${match.group(1)}');
-                variable!.dollors!.forEach((element) {
-                  element.forEach((key, value) {
-                    var a = key.contains('\$${match.group(1)}');
-                    if (a) {
+                for (var dollor in variable!.dollors!) {
+                  dollor.forEach((key, value) {
+                    var isKeyFound = key.contains('\$${match.group(1)}');
+                    if (isKeyFound) {
                       if (value is Dollors) {
                         Dollors d = value;
-                        // print(d.defaultValue);
-                        print(d.values != null ? d.values.toString() : d.defaultValue.toString());
 
                         _launchNextPage(context, d);
                       }
                     }
                   });
-                });
+                }
               },
-              child: Text('\$${match.group(1)}', style: const TextStyle(color: Colors.blue)))));
+              child: Text('\$${match.group(1)}', style: const TextStyle(color: Colors.blue, fontSize: 18)))));
       start = match.end;
     }
-    textSpans.add(TextSpan(text: text.substring(start, text.length)));
+    textSpans.add(TextSpan(text: text.substring(start, text.length), style: Style.text20(context)));
     return Text.rich(TextSpan(children: textSpans));
   }
 
@@ -80,14 +77,14 @@ class _IndexDetailState extends State<IndexDetail> {
           title: const Text('Criteria'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(Style.padding10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 80,
-                padding: const EdgeInsets.all(10),
+                height: Style.height80,
+                padding: const EdgeInsets.all(Style.padding10),
                 decoration: const BoxDecoration(color: Style.lightBlue),
                 child: Row(
                   children: [
@@ -101,7 +98,7 @@ class _IndexDetailState extends State<IndexDetail> {
                         ),
                         Text(
                           _stockIndex.tag!,
-                          style: Style.text15(context),
+                          style: TextStyle(color: Style.indexColor(_stockIndex.color!)),
                         ),
                       ],
                     ),
@@ -119,10 +116,10 @@ class _IndexDetailState extends State<IndexDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 18.0),
+                          padding: const EdgeInsets.symmetric(vertical: Style.padding18),
                           child: _criteria.variable == null
-                              ? Text(_criteria.text.toString(), style: Style.text16(context))
-                              : stringManipulation(_criteria.text, _criteria.variable))
+                              ? Text(_criteria.text.toString(), style: Style.text20(context))
+                              : buildClickableText(_criteria.text, _criteria.variable))
                     ],
                   );
                 },
