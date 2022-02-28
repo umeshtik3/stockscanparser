@@ -41,9 +41,6 @@ class IndexParameters extends StatelessWidget {
                   )
                 ],
               ))
-          // Text(
-          //   widget.dollors!.defaultValue.toString(),
-          // ),
         ]),
       ),
     );
