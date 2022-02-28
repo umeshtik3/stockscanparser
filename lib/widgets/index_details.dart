@@ -30,7 +30,7 @@ class _IndexDetailState extends State<IndexDetail> {
     _stockIndex.color = widget.stockIndex.color;
   }
 
-  Criterion extractCriteriaText(int index) {
+  Criterion criteriaDetails(int index) {
     Criterion criterion = Criterion();
     criterion.text = _criterionList![index].text;
     criterion.type = _criterionList![index].type;
@@ -81,52 +81,57 @@ class _IndexDetailState extends State<IndexDetail> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: Style.height80,
-                padding: const EdgeInsets.all(Style.padding10),
-                decoration: const BoxDecoration(color: Style.lightBlue),
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _stockIndex.name!,
-                          style: Style.text19(context),
-                        ),
-                        Text(
-                          _stockIndex.tag!,
-                          style: TextStyle(color: Style.indexColor(_stockIndex.color!)),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: _criterionList!.length,
-                itemBuilder: (context, index) {
-                  Criterion _criteria = extractCriteriaText(index);
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.symmetric(vertical: Style.padding18),
-                          child: _criteria.variable == null
-                              ? Text(_criteria.text.toString(), style: Style.text20(context))
-                              : buildClickableText(_criteria.text, _criteria.variable))
-                    ],
-                  );
-                },
-              )
-            ],
+            children: [headerTitle(context), criteriaTextList()],
           ),
         ));
+  }
+
+  ListView criteriaTextList() {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: _criterionList!.length,
+      itemBuilder: (context, index) {
+        Criterion _criteria = criteriaDetails(index);
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+                padding: const EdgeInsets.symmetric(vertical: Style.padding18),
+                child: _criteria.variable == null
+                    ? Text(_criteria.text.toString(), style: Style.text20(context))
+                    : buildClickableText(_criteria.text, _criteria.variable))
+          ],
+        );
+      },
+    );
+  }
+
+  Container headerTitle(BuildContext context) {
+    return Container(
+      height: Style.height80,
+      padding: const EdgeInsets.all(Style.padding10),
+      decoration: const BoxDecoration(color: Style.lightBlue),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _stockIndex.name!,
+                style: Style.text19(context),
+              ),
+              Text(
+                _stockIndex.tag!,
+                style: TextStyle(color: Style.indexColor(_stockIndex.color!)),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   void _launchNextPage(BuildContext context, Dollors? dollors) {

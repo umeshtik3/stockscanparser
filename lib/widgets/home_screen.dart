@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../backend/api/api_manager.dart';
 import '../data_models/data_models.dart';
 import '../utility/common/common_style.dart';
@@ -50,36 +49,38 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Scan parser'),
       ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: _stockIndexList!.length,
-                  itemBuilder: (context, index) {
-                    Indexes stockIndex = _singleIndex(index, _stockIndexList);
-                    return GestureDetector(
-                      onTap: (() => {_launchNextPage(context, stockIndex)}),
-                      child: Padding(
-                        padding: const EdgeInsets.all(Style.padding8),
-                        child: Card(
-                          color: Style.lightGrey,
-                          child: ListTile(
-                            title: Text(stockIndex.name!, style: Style.text18(context)),
-                            subtitle: Text(
-                              stockIndex.tag.toString(),
-                              style: TextStyle(fontSize: Style.fontSize16, color: Style.indexColor(stockIndex.color!)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+      body: _loading ? const Center(child: CircularProgressIndicator()) : buildStockIndex(),
+    );
+  }
+
+  Column buildStockIndex() {
+    return Column(
+      children: [
+        ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: _stockIndexList!.length,
+          itemBuilder: (context, index) {
+            Indexes stockIndex = _singleIndex(index, _stockIndexList);
+            return GestureDetector(
+              onTap: (() => {_launchNextPage(context, stockIndex)}),
+              child: Padding(
+                padding: const EdgeInsets.all(Style.padding8),
+                child: Card(
+                  color: Style.lightGrey,
+                  child: ListTile(
+                    title: Text(stockIndex.name!, style: Style.text18(context)),
+                    subtitle: Text(
+                      stockIndex.tag.toString(),
+                      style: TextStyle(fontSize: Style.fontSize16, color: Style.indexColor(stockIndex.color!)),
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
