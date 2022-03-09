@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:stockscanparser/data_models/data_models.dart';
+import 'package:stockscanparser/index_bloc.dart';
 import 'package:stockscanparser/utility/common/common_style.dart';
 import 'package:stockscanparser/widgets/index_parameters.dart';
 import 'package:stockscanparser/widgets/list_parameters.dart';
@@ -46,7 +47,9 @@ class _IndexDetailState extends State<IndexDetail> {
     final Iterable<Match> matches = regex.allMatches(text);
     int start = 0;
     for (final Match match in matches) {
-      textSpans.add(TextSpan(text: text.substring(start, match.start), style: Style.text20(context)));
+      textSpans.add(TextSpan(
+          text: text.substring(start, match.start),
+          style: Style.text20(context)));
       textSpans.add(WidgetSpan(
           child: GestureDetector(
               onTap: () {
@@ -63,10 +66,13 @@ class _IndexDetailState extends State<IndexDetail> {
                   });
                 }
               },
-              child: Text('\$${match.group(1)}', style: const TextStyle(color: Colors.blue, fontSize: 18)))));
+              child: Text('\$${match.group(1)}',
+                  style: const TextStyle(color: Colors.blue, fontSize: 18)))));
       start = match.end;
     }
-    textSpans.add(TextSpan(text: text.substring(start, text.length), style: Style.text20(context)));
+    textSpans.add(TextSpan(
+        text: text.substring(start, text.length),
+        style: Style.text20(context)));
     return Text.rich(TextSpan(children: textSpans));
   }
 
@@ -100,8 +106,12 @@ class _IndexDetailState extends State<IndexDetail> {
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: Style.padding18),
                 child: _criteria.variable == null
-                    ? Text(_criteria.text.toString(), style: Style.text20(context))
-                    : buildClickableText(_criteria.text, _criteria.variable))
+                    ? Text(_criteria.text.toString(),
+                        style: Style.text20(context))
+                    : const Text('').convertIntoClickableText(
+                        context, _criteria.text, _criteria.variable)
+                // buildClickableText(_criteria.text, _criteria.variable),
+                )
           ],
         );
       },
@@ -138,7 +148,8 @@ class _IndexDetailState extends State<IndexDetail> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                dollors!.values == null ? IndexParameters(dollors: dollors) : ListParameters(dollors: dollors)));
+            builder: (context) => dollors!.values == null
+                ? IndexParameters(dollors: dollors)
+                : ListParameters(dollors: dollors)));
   }
 }
